@@ -1,5 +1,47 @@
 {
-  "sword": { "price": 50 },
-  "shield": { "price": 75 },
-  "potion": { "price": 25 }
+  "wooden_sword": {
+    "price": 20,
+    "level": 1,
+    "desc": "Basic wooden sword"
+  },
+  "health_potion": {
+    "price": 30,
+    "level": 1,
+    "desc": "Restores 50 HP"
+  },
+  "iron_sword": {
+    "price": 80,
+    "level": 3,
+    "desc": "Stronger sword made of iron"
+  },
+  "mega_potion": {
+    "price": 100,
+    "level": 4,
+    "desc": "Restores full HP"
+  },
+  "fire_blade": {
+    "price": 150,
+    "level": 5,
+    "desc": "Burns enemies with flames"
+  },
+  "shadow_dagger": {
+    "price": 220,
+    "level": 7,
+    "desc": "Deadly weapon from the shadows"
+  },
+  "dragon_slayer": {
+    "price": 350,
+    "level": 10,
+    "desc": "Slays even the fiercest beasts"
+  },
+  "dark_elixir": {
+    "price": 400,
+    "level": 12,
+    "desc": "Boosts power temporarily"
+  },
+  "void_scythe": {
+    "price": 500,
+    "level": 15,
+    "desc": "Scythe forged from void energy"
+  }
 }
