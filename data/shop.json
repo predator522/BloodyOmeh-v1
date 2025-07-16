@@ -1,0 +1,5 @@
+{
+  "sword": { "price": 50 },
+  "shield": { "price": 75 },
+  "potion": { "price": 25 }
+}
