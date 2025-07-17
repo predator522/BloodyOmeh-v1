@@ -5,7 +5,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
+const TELEGRAM_TOKEN = process.env.TG_BOT_TOKEN; // match your .env key
 const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
 
 bot.onText(/^\/pair (\d{11,14})$/, async (msg, match) => {
