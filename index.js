@@ -45,7 +45,7 @@ app.get('/pair', async (req, res) => {
   } catch (err) {
     res.status(500).send('Error generating pairing code: ' + err.message);
   }
-});
+}); // <- ✅ this was missing
 
 app.listen(PORT, () => {
   console.log(`🌐 HTTP Server running at http://localhost:${PORT}`);
