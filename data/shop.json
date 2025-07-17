@@ -1,47 +1,67 @@
 {
-  "wooden_sword": {
-    "price": 20,
-    "level": 1,
-    "desc": "Basic wooden sword"
+  "weapons": {
+    "wooden_sword": {
+      "type": "weapon",
+      "price": 20,
+      "level": 1,
+      "desc": "Basic wooden sword",
+      "power": 5
+    },
+    "iron_sword": {
+      "type": "weapon",
+      "price": 80,
+      "level": 3,
+      "desc": "Stronger sword made of iron",
+      "power": 15
+    },
+    "fire_blade": {
+      "type": "weapon",
+      "price": 150,
+      "level": 5,
+      "desc": "Burns enemies with flames",
+      "power": 30
+    },
+    "shadow_dagger": {
+      "type": "weapon",
+      "price": 220,
+      "level": 7,
+      "desc": "Deadly weapon from the shadows",
+      "power": 40
+    },
+    "dragon_slayer": {
+      "type": "weapon",
+      "price": 350,
+      "level": 10,
+      "desc": "Slays even the fiercest beasts",
+      "power": 55
+    },
+    "void_scythe": {
+      "type": "weapon",
+      "price": 500,
+      "level": 15,
+      "desc": "Scythe forged from void energy",
+      "power": 75
+    }
   },
-  "health_potion": {
-    "price": 30,
-    "level": 1,
-    "desc": "Restores 50 HP"
-  },
-  "iron_sword": {
-    "price": 80,
-    "level": 3,
-    "desc": "Stronger sword made of iron"
-  },
-  "mega_potion": {
-    "price": 100,
-    "level": 4,
-    "desc": "Restores full HP"
-  },
-  "fire_blade": {
-    "price": 150,
-    "level": 5,
-    "desc": "Burns enemies with flames"
-  },
-  "shadow_dagger": {
-    "price": 220,
-    "level": 7,
-    "desc": "Deadly weapon from the shadows"
-  },
-  "dragon_slayer": {
-    "price": 350,
-    "level": 10,
-    "desc": "Slays even the fiercest beasts"
-  },
-  "dark_elixir": {
-    "price": 400,
-    "level": 12,
-    "desc": "Boosts power temporarily"
-  },
-  "void_scythe": {
-    "price": 500,
-    "level": 15,
-    "desc": "Scythe forged from void energy"
+  "potions": {
+    "health_potion": {
+      "type": "potion",
+      "price": 30,
+      "level": 1,
+      "desc": "Restores 50 HP"
+    },
+    "mega_potion": {
+      "type": "potion",
+      "price": 100,
+      "level": 4,
+      "desc": "Restores full HP"
+    },
+    "dark_elixir": {
+      "type": "potion",
+      "price": 400,
+      "level": 12,
+      "desc": "Boosts power temporarily"
+    }
   }
 }
+
