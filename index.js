@@ -1,52 +1,51 @@
 require('dotenv').config();
+const { default: makeWASocket, useMultiFileAuthState } = require('@whiskeysockets/baileys');
+const { handleCommand } = require('./handlers/commandHandler');
+const { startTelegramBot } = require('./telegram/pairbot');
+const pino = require('pino');
 const express = require('express');
-const { Telegraf } = require('telegraf');
-const makeSocket = require('./socket/connection');
+const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Setup Telegram bot
-const bot = new Telegraf(process.env.TG_BOT_TOKEN);
+// Express health check for Railway/VPS
+app.get('/', (req, res) => res.send('BloodyOmeh v1 is alive!'));
+app.listen(PORT, () => console.log(`✅ Web server running on port ${PORT}`));
 
-bot.command('start', (ctx) => {
-  ctx.reply('🤖 Welcome to BloodyOmeh v1\nUse /pair <number> to get your WhatsApp pairing code.');
+// --- MULTI SESSION LOGIN SYSTEM ---
+const startWhatsAppBot = async (sessionId) => {
+    const sessionPath = path.join(__dirname, './data/sessions', sessionId);
+    if (!fs.existsSync(sessionPath)) return console.log(`❌ Session not found: ${sessionId}`);
+
+    const { state, saveCreds } = await useMultiFileAuthState(sessionPath);
+
+    const sock = makeWASocket({
+        printQRInTerminal: true,
+        auth: state,
+        logger: pino({ level: 'silent' })
+    });
+
+    sock.ev.on('creds.update', saveCreds);
+
+    sock.ev.on('messages.upsert', async ({ messages, type }) => {
+        if (type !== 'notify') return;
+        const msg = messages[0];
+        if (!msg.message) return;
+        await handleCommand(sock, msg);
+    });
+
+    console.log(`🤖 WhatsApp session '${sessionId}' loaded successfully.`);
+};
+
+// Start all available sessions
+const sessionsDir = path.join(__dirname, './data/sessions');
+fs.readdirSync(sessionsDir).forEach(session => {
+    if (fs.lstatSync(path.join(sessionsDir, session)).isDirectory()) {
+        startWhatsAppBot(session);
+    }
 });
 
-bot.command('pair', async (ctx) => {
-  const args = ctx.message.text.split(' ');
-  if (args.length !== 2) return ctx.reply('❌ Usage: /pair <number>');
-  const number = args[1];
-
-  try {
-    const code = await makeSocket(number);
-    ctx.reply(`🔐 Pairing Code for *${number}*:\n\`${code}\``, { parse_mode: 'Markdown' });
-  } catch (err) {
-    ctx.reply('⚠️ Error generating pairing code:\n' + err.message);
-  }
-});
-
-bot.launch();
-console.log('🤖 Telegram bot launched');
-
-// Express server
-app.use(express.json());
-
-app.get('/', (_, res) => {
-  res.send('🤖 BloodyOmeh v1 is running.');
-});
-
-app.get('/pair', async (req, res) => {
-  const number = req.query.number;
-  if (!number) return res.status(400).send('Missing ?number= parameter');
-  try {
-    const code = await makeSocket(number);
-    res.send(`🔐 Pairing Code for ${number}: ${code}`);
-  } catch (err) {
-    res.status(500).send('Error generating pairing code: ' + err.message);
-  }
-}); // <- ✅ this was missing
-
-app.listen(PORT, () => {
-  console.log(`🌐 HTTP Server running at http://localhost:${PORT}`);
-});
+// Start Telegram Pair Bot
+startTelegramBot();
